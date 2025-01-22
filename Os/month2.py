@@ -123,68 +123,100 @@
 # list_running_process("process_list.txt")
 
 
-import os
-import shutil
-from datetime import datetime, timedelta
+# import os
+# import shutil
+# from datetime import datetime, timedelta
 
-def file_cleanup(directory, days):
-    archive_folder = os.path.join(directory, "Archive")
-    os.makedirs(archive_folder, exist_ok=True)
+# def file_cleanup(directory, days):
+#     archive_folder = os.path.join(directory, "Archive")
+#     os.makedirs(archive_folder, exist_ok=True)
     
-    # Calculate the cutoff date
-    cutoff_date = datetime.now() - timedelta(days=days)
+#     # Calculate the cutoff date
+#     cutoff_date = datetime.now() - timedelta(days=days)
     
-    for filename in os.listdir(directory):
-        file_path = os.path.join(directory, filename)
-        if os.path.isfile(file_path):
-            file_mtime = datetime.fromtimestamp(os.path.getmtime(file_path))
-            if file_mtime < cutoff_date:
-                shutil.move(file_path, archive_folder)
-                print(f"Moved: {filename}")
+#     for filename in os.listdir(directory):
+#         file_path = os.path.join(directory, filename)
+#         if os.path.isfile(file_path):
+#             file_mtime = datetime.fromtimestamp(os.path.getmtime(file_path))
+#             if file_mtime < cutoff_date:
+#                 shutil.move(file_path, archive_folder)
+#                 print(f"Moved: {filename}")
 
-    confirm = input(f"Do you want to delete the 'Archive' folder? (yes/no): ").strip().lower()
-    if confirm == 'yes':
-        shutil.rmtree(archive_folder)
-        print("Archive folder deleted.")
-    else:
-        print("Archive folder retained.")
-file_cleanup('/path/to/directory', 30)  
-import os
-import platform
-import subprocess
+#     confirm = input(f"Do you want to delete the 'Archive' folder? (yes/no): ").strip().lower()
+#     if confirm == 'yes':
+#         shutil.rmtree(archive_folder)
+#         print("Archive folder deleted.")
+#     else:
+#         print("Archive folder retained.")
+# file_cleanup('/path/to/directory', 30)  
+# import os
+# import platform
+# import subprocess
 
-def system_diagnostics_report(output_file):
-    cwd = os.getcwd()
+# def system_diagnostics_report(output_file):
+#     cwd = os.getcwd()
 
-    # Get disk usage (current directory)
-    disk_usage = subprocess.getoutput(f"du -sh {cwd}")
+#     # Get disk usage (current directory)
+#     disk_usage = subprocess.getoutput(f"du -sh {cwd}")
 
-    # Get system information
-    os_info = platform.uname()
+#     # Get system information
+#     os_info = platform.uname()
 
-    report = f"""
-System Diagnostics Report
-==========================
-Current Working Directory: {cwd}
+#     report = f"""
+# System Diagnostics Report
+# ==========================
+# Current Working Directory: {cwd}
 
-Disk Usage:
-{disk_usage}
+# Disk Usage:
+# {disk_usage}
 
-System Information:
-- System: {os_info.system}
-- Node Name: {os_info.node}
-- Release: {os_info.release}
-- Version: {os_info.version}
-- Machine: {os_info.machine}
-- Processor: {os_info.processor}
-"""
+# System Information:
+# - System: {os_info.system}
+# # - Node Name: {os_info.node}
+# # - Release: {os_info.release}
+# # - Version: {os_info.version}
+# # # - Machine: {os_info.machine}
+# # - Processor: {os_info.processor}
+# # """
 
-    # Save the report to a file
-    with open(output_file, "w") as file:
-        file.write(report)
+# #     # Save the report to a file
+# #     with open(output_file, "w") as file:
+# #         file.write(report)
 
-    print(f"Report saved to {output_file}")
+# #     print(f"Report saved to {output_file}")
 
-# Usage
-output_file = input("Enter the file path to save the report (e.g., diagnostics.txt): ")
-system_diagnostics_report(output_file)
+# # # Usage
+# # output_file = input("Enter the file path to save the report (e.g., diagnostics.txt): ")
+# # system_diagnostics_report(output_file)
+
+# import smtplib
+# from email.mime.text import MIMEText
+# from email.mime.multipart import MIMEMultipart
+# #email credentials
+# sender_email="prakritikhatri746@gmail.com"
+# recevier_email="ruman.metahorizon@gmail.com"
+# password="pqpo cgwx pbsb rwkr"
+# message=MIMEMultipart()
+# message["from"]=sender_email
+# message["to"]=recevier_email
+# message["subject"]="test email"
+# body="hello, this is a test email send from python"
+# message.attach(MIMEMultipart(body,"plain"))
+# try:
+#   with smtplib.SMTP("smtp.gmail.com", 587) as server:
+#         server.starttls()
+#         server.login(sender_email,password)
+#         server.sendmail(sender_email,recevier_email,message.as_string())
+#         print("emeil sent successfully!")
+# except Exception as e:
+#     print(f"error:{e}")
+
+import schedule
+import time
+def send_notification():
+    print("this is your schedule notification!")
+    schedule.every(10).seconds.do(send_notification)
+    print("scheduler started.press ctrl+c to stop")
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
